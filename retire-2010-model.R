@@ -26,9 +26,6 @@ Gin = function(t) {
 }
 
 G=function(t) {
-  cat(t)
-  writeLines("is the t")
-  
   if(t < 1){
     return (Init_G)
   }
