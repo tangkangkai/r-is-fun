@@ -24,9 +24,10 @@ Gin = function(t) {
   return(first_stage + second_stage + third_stage)
 }
 
-t = rep(0,600)
-m_fit = rep(0, 600)
-for (i in 1:600) {
+total = 1000
+t = rep(0,total)
+m_fit = rep(0, total)
+for (i in 1:total) {
   t[i] = i
   m_fit[i] = Gin(i)
 }
