@@ -1,28 +1,14 @@
 #FUNCTIONS
-Gm = function(t) {
-  b = 80
-  k = 5100
-  p = -(t ^ 2) / (2 * b ^ 2)
-  return(k * t / (b * b) * exp(p))
-}
-
-Gin_At_m = function(t, tm)
-{
-  u = 0
-  if (t > tm)
-  {
-    u = 1
+Gin=function(t) {
+  if (t >= 275 * 3) {
+    return (0)
   }
-  return(u * Gm(t - tm))
-}
-
-Gin = function(t) {
-  
-  first_stage = Gin_At_m(t, 50)
-  second_stage = Gin_At_m(t, 150)
-  third_stage = Gin_At_m(t, 900)
-  
-  return(first_stage + second_stage + third_stage)
+  t = (t %% 276)
+  if (t <= 220) {
+    return (0.61 + t * 0.15)
+  } else {
+    return (84.84 + t * -0.22)
+  }
 }
 
 G=function(t) {
@@ -111,11 +97,11 @@ f7=function(g) {
   return(20+(140-20)/(1+exp(-2.4*(g/10000-2))))
 }
 
-alpha=0.896
-beta=0.818
-theta1=5.02
-theta2=15.2
-d=0.107
+alpha=1
+beta=1
+theta1=10
+theta2=11
+d=0.018
 
 g_real<- c(1044,1044,1044,1026,1026,1026,1026,1044,
            1080,1134,1170,1206,1242,1260,1278,1260,1224,1170,
@@ -148,9 +134,9 @@ g_real<- c(1044,1044,1044,1026,1026,1026,1026,1044,
 
 
 #INITIAL VALUES
-Init_G = 900
-Init_I = 10
-g_total = 1000
+Init_G = 1044
+Init_I = 30
+g_total = length(g_real)
 t_total = 5 * g_total
 
 Gmatrix=matrix(0,t_total,1)
@@ -191,13 +177,15 @@ for (i in 1:g_total) {
 plot(t, g_fit, 
      col="blue",
      cex=0.1,
-     ylim=c(0,300),
+     ylim=c(400,1600),
      xlab = "Time Point",
      ylab = "Glucose Concentration (mg/L)",
      main="The fitting reslut for subject 01-011 on the second day of visit 2 ",
      type = 'l')
 
 lines(t,g_fit,col="blue",lwd=2)
+lines(t,g_real,col="red",lwd=2)
+
 
 
 
